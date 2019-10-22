@@ -91,5 +91,27 @@ public class TextLib {
         return new Review( review, rating );
     }
 
+    public static ArrayList<String> saveWordsIntoList(String filename) {
+        Scanner scanner = null;
+        ArrayList<String> words = new ArrayList<>();
+
+        try {
+            scanner = new Scanner(new FileReader(filename));
+            scanner.nextLine();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                words.add(line);
+            }
+
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found " + filename);
+        }
+
+        return words;
+    }
+
 
 }
