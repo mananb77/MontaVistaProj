@@ -14,21 +14,18 @@ public class ReviewTester {
         double error = 0;
 
         for ( Review review : reviews ) {
-            String textName = "data/Texts/AllTexts/" + info.getTextName();
-            String phrase = TextLib.readFileAsString(textName);
+            String text = review.getText();
 
-            ArrayList<String> sentences = TextLib.splitIntoSentences(phrase);
-            double prediction = FKReadability( sentences ) - 7;
+            ArrayList<String> sentences = TextLib.splitIntoSentences(text);
+            double prediction = calculateRating( sentences );
 
-            System.out.println("Name: " + info.getTextName());
-            System.out.println("Calculated readability: " + prediction);
-            System.out.println("Real readability: " + info.getFleschScore());
-            System.out.println();
-
-            error += compareToRealValue( prediction, info.getFleschScore() );
+            error += compareToRealValue( prediction, review.getRating() );
         }
 
-        return error / docInfos.size();
+        return error / reviews.size();
+    }
+
+    private static double calculateRating(ArrayList<String> sentences) {
     }
 
     private static double compareToRealValue( double prediction, double score ) {
