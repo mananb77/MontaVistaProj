@@ -25,7 +25,7 @@ public class ReviewTester {
     }
 
     private static double calculateRating(Document review) {
-        ArrayList sentence = splitIntoSentences()
+        ArrayList sentence =
     }
 
     private static double compareToRealValue( double prediction, double score ) {
