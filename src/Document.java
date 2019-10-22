@@ -218,7 +218,7 @@ public class Document {
         return wordBucket;
     }
 
-    public static ArrayList<String> splitIntoSentences( String text ) {
+    public ArrayList<String> splitIntoSentences( String text ) {
         ArrayList<String> output = new ArrayList<>();
 
         Locale locale = Locale.US;
@@ -242,7 +242,7 @@ public class Document {
         return output;
     }
 
-    private static ArrayList<String> splitIntoWords(String text) {
+    public ArrayList<String> splitIntoWords( String text ) {
         ArrayList<String> words = convertToArrayList( text.split(" ") );
         return words;
     }
