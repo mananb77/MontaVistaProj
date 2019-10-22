@@ -21,6 +21,10 @@ public class Document {
         commonWords = loadWordFrequenciesDoc();
     }
 
+    public static void calculateRating() {
+
+    }
+
     public static Document getDocumentFrom( String fileName ) {
         String text = getTextFrom(fileName);
         return new Document(text);
