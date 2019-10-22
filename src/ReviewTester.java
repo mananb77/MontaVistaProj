@@ -16,8 +16,7 @@ public class ReviewTester {
         for ( Review review : reviews ) {
             String text = review.getText();
 
-            ArrayList<String> sentences = TextLib.splitIntoSentences(text);
-            double prediction = calculateRating( sentences );
+            double prediction = calculateRating( review );
 
             error += compareToRealValue( prediction, review.getRating() );
         }
@@ -25,10 +24,8 @@ public class ReviewTester {
         return error / reviews.size();
     }
 
-    private static double calculateRating(ArrayList<String> sentences) {
-        for (String sentence : sentences) {
-            for
-        }
+    private static double calculateRating(Document review) {
+        ArrayList sentence = splitIntoSentences()
     }
 
     private static double compareToRealValue( double prediction, double score ) {
