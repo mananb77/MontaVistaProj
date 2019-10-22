@@ -11,26 +11,27 @@ public class Document {
     private ArrayList<String> sentences;
     private ArrayList<String> words;
     private boolean isCurrent = true;
+    private int rating = 0;
     private static WordBucketV2 commonWords = new WordBucketV2();
 
-    public Document( String text ) {
+    public Document( String text, int rating ) {
         this.text = text;
+        this.rating = rating;
         this.sentences = splitIntoSentences( this.text );
         this.words = splitIntoWords( this.text );
 
         commonWords = loadWordFrequenciesDoc();
     }
 
-    public static void calculateRating() {
-
+    public int getRating() {
+        return rating;
     }
 
-    public static Document getDocumentFrom( String fileName ) {
-        String text = getTextFrom(fileName);
-        return new Document(text);
+    public String getText() {
+        return this.text;
     }
 
-    public void setText( String newText ) {
+    public void setText(String newText ) {
         this.text = newText;
         isCurrent = false;
     }

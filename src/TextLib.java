@@ -52,9 +52,9 @@ public class TextLib {
         return output;
     }
 
-    public static ArrayList<Review> readAmazonReviewFile(String filename) {
+    public static ArrayList<Document> readAmazonReviewFile(String filename) {
         Scanner scanner = null;
-        ArrayList<Review> reviews = new ArrayList<>();
+        ArrayList<Document> reviews = new ArrayList<>();
 
         try {
             scanner = new Scanner(new FileReader(filename));
@@ -68,7 +68,7 @@ public class TextLib {
             while (scanner.hasNextLine() && count <= 1395) {
                 String line = scanner.nextLine();
 
-                Review d = getReview( line );
+                Document d = getReview( line );
                 reviews.add(d);
                 count++;
             }
@@ -82,13 +82,13 @@ public class TextLib {
         return reviews;
     }
 
-    private static Review getReview(String line) {
+    private static Document getReview(String line) {
         String[] data = line.split(",");
 
         String review = data[19].trim();
         int rating = Integer.parseInt(data[17].trim());
 
-        return new Review( review, rating );
+        return new Document( review, rating );
     }
 
     public static ArrayList<String> saveWordsIntoList(String filename) {
