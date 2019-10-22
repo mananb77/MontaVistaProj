@@ -26,6 +26,9 @@ public class ReviewTester {
     }
 
     private static double calculateRating(ArrayList<String> sentences) {
+        for (String sentence : sentences) {
+            for
+        }
     }
 
     private static double compareToRealValue( double prediction, double score ) {
