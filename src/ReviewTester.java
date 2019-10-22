@@ -3,6 +3,9 @@ import java.util.ArrayList;
 public class ReviewTester {
     public static void main(String[] args) {
         ArrayList<Review> reviews = TextLib.readAmazonReviewFile("data/Texts/allfeatures-ose-final.csv");
+        ArrayList<String> positiveWords = TextLib.saveWordsIntoList("data/positivewords.csv");
+        ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
+
         double averageError = compareToRealValues( reviews );
         System.out.println("Average deviation: " + averageError);
     }
