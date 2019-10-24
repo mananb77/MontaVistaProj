@@ -5,7 +5,9 @@ public class ReviewTester {
     public static ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
 
     public static void main(String[] args) {
-        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/reviews.csv");
+//        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/reviews.csv");
+
+        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
         double averageError = compareToRealValues( reviews );
         System.out.println("Average deviation: " + averageError);
     }

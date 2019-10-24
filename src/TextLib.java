@@ -85,11 +85,41 @@ public class TextLib {
         return reviews;
     }
 
+    public static ArrayList<Document> readSampleReviewFile(String filename) {
+        Scanner scanner = null;
+        ArrayList<Document> reviews = new ArrayList<>();
+
+        try {
+            scanner = new Scanner(new FileReader(filename));
+
+            int count = 0;
+            scanner.nextLine();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                Document d = getReview(line);
+                reviews.add(d);
+                count++;
+            }
+
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found " + filename);
+        }
+
+        return reviews;
+    }
+
     private static Document getReview(String line) {
         String[] data = line.split(",");
 
-        String review = data[19].trim();
-        int rating = Integer.parseInt(data[17].trim());
+//        String review = data[19].trim();
+//        int rating = Integer.parseInt(data[17].trim());
+
+        int rating = Integer.parseInt(data[0].trim());
+        String review = data[1].trim();
 
         return new Document(review, rating);
     }
