@@ -5,7 +5,7 @@ public class ReviewTester {
     public static ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
 
     public static void main(String[] args) {
-        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/Texts/allfeatures-ose-final.csv");
+        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/reviews.csv");
         double averageError = compareToRealValues( reviews );
         System.out.println("Average deviation: " + averageError);
     }
@@ -41,20 +41,37 @@ public class ReviewTester {
                 }
             }
 
-            double ratio = (positive/words.size()) / (negative/words.size());
+            double ratio = 0;
 
-            if (ratio <= 0.4) {
-                rating = 1;
-            } else if (ratio > 0.4 && ratio < 0.6) {
-                rating = 2;
-            } else if (ratio >= 0.6) {
+            if (positive == 0) {
+                rating = 0;
+            } else if (negative == 0) {
                 rating = 3;
+            } else {
+                ratio = (positive/words.size()) / (negative/words.size()); // to prevent the div by 0 error
+            }
+
+            /*
+            I hate this product and it sucks.
+            1/7 / 2/7 = 0
+             */
+
+            if (ratio <= 0.2) {
+                rating = 1;
+            } else if (ratio > 0.2 && ratio <= 0.4) {
+                rating = 2;
+            }else if (ratio > 0.4 && ratio < 0.6) {
+                rating = 3;
+            } else if (ratio >= 0.6 && ratio < 0.8) {
+                rating = 4;
+            } else if (ratio >= 0.8) {
+                rating = 5;
             }
 
             total += rating;
         }
 
-        return total / sentences.size();
+        return (double)total / sentences.size();    // average the rating of all sentences to give final rating
     }
 
     private static double compareToRealValue( double prediction, double rating ) {

@@ -11,7 +11,6 @@ public class TextLib {
     public static final int AMAZON_REVIEW_START = 854;
     public static final int AMAZON_REVIEW_END = 1395;
 
-
     public static String readFileAsString(String filename) {
         Scanner scanner;
         StringBuilder output = new StringBuilder();
@@ -57,8 +56,6 @@ public class TextLib {
     }
 
     public static ArrayList<Document> readAmazonReviewFile(String filename) {
-
-
         Scanner scanner = null;
         ArrayList<Document> reviews = new ArrayList<>();
 
