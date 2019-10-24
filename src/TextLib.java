@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 public class TextLib {
 
+    public static final int AMAZON_REVIEW_START = 854;
+    public static final int AMAZON_REVIEW_END = 1395;
+
+
     public static String readFileAsString(String filename) {
         Scanner scanner;
         StringBuilder output = new StringBuilder();
@@ -16,7 +20,7 @@ public class TextLib {
             scanner = new Scanner(new FileInputStream(filename), "UTF-8");
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                output.append(line.trim()+"\n");
+                output.append(line.trim() + "\n");
             }
 
             scanner.close();
@@ -37,22 +41,24 @@ public class TextLib {
 
         int prevIndex = 0;
         int boundaryIndex = breakIterator.first();
-        while(boundaryIndex != BreakIterator.DONE) {
+        while (boundaryIndex != BreakIterator.DONE) {
             String sentence = text.substring(prevIndex, boundaryIndex).trim();
-            if (sentence.length()>0)
+            if (sentence.length() > 0)
                 output.add(sentence);
             prevIndex = boundaryIndex;
             boundaryIndex = breakIterator.next();
         }
 
         String sentence = text.substring(prevIndex).trim();
-        if (sentence.length()>0)
+        if (sentence.length() > 0)
             output.add(sentence);
 
         return output;
     }
 
     public static ArrayList<Document> readAmazonReviewFile(String filename) {
+
+
         Scanner scanner = null;
         ArrayList<Document> reviews = new ArrayList<>();
 
@@ -60,15 +66,15 @@ public class TextLib {
             scanner = new Scanner(new FileReader(filename));
 
             int count = 0;
-            for (int i = 0; i < 853; i++) {
+            for (int i = 0; i < AMAZON_REVIEW_START - 1; i++) {
                 scanner.nextLine();
                 count++;
             }
 
-            while (scanner.hasNextLine() && count <= 1395) {
+            while (scanner.hasNextLine() && count <= AMAZON_REVIEW_END) {
                 String line = scanner.nextLine();
 
-                Document d = getReview( line );
+                Document d = getReview(line);
                 reviews.add(d);
                 count++;
             }
@@ -88,7 +94,7 @@ public class TextLib {
         String review = data[19].trim();
         int rating = Integer.parseInt(data[17].trim());
 
-        return new Document( review, rating );
+        return new Document(review, rating);
     }
 
     public static ArrayList<String> saveWordsIntoList(String filename) {
