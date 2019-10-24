@@ -12,15 +12,12 @@ public class Document {
     private ArrayList<String> words;
     private boolean isCurrent = true;
     private int rating = 0;
-    private static WordBucketV2 commonWords = new WordBucketV2();
 
     public Document( String text, int rating ) {
         this.text = text;
         this.rating = rating;
         this.sentences = splitIntoSentences( this.text );
         this.words = splitIntoWords( this.text );
-
-        commonWords = loadWordFrequenciesDoc();
     }
 
     public int getRating() {
@@ -182,40 +179,6 @@ public class Document {
         }
 
         return output.toString();
-    }
-
-    public WordBucketV2 loadWordFrequenciesDoc() {
-        Scanner scanner;
-        WordBucketV2 wordBucket = new WordBucketV2();
-
-        try {
-            scanner = new Scanner(new FileReader("data/commonWords.txt"));
-            scanner.nextLine();
-
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-
-                String word = "";
-                int frequency = 0;
-
-                String[] data = line.split(" ");
-                String numbers = "0123456789";
-
-                for ( String charSequence : data ) {
-                    if ( !charSequence.contains(numbers) ) word = charSequence;
-                    if ( charSequence.contains(numbers) ) frequency = Integer.parseInt(charSequence);
-                }
-
-                wordBucket.add(word, frequency);
-            }
-
-            scanner.close();
-
-        } catch (FileNotFoundException e) {
-            System.out.println("File not found " + "data/commonWords.txt");
-        }
-
-        return wordBucket;
     }
 
     public ArrayList<String> splitIntoSentences( String text ) {
