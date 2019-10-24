@@ -8,17 +8,17 @@ public class ReviewTester {
         ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
 
 //        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
-        double averageError = compareToRealValues( reviews );
+        double averageError = compareToRealValues(reviews);
         System.out.println("Average deviation: " + averageError);
     }
 
-    private static double compareToRealValues ( ArrayList<Document> reviews ) {
+    private static double compareToRealValues(ArrayList<Document> reviews) {
         double error = 0;
 
-        for ( Document review : reviews ) {
-            double prediction = calculateRating( review );
+        for (Document review : reviews) {
+            double prediction = calculateRating(review);
             System.out.println(prediction + " " + review.getRating());
-            error += compareToRealValue( prediction, review.getRating() );
+            error += compareToRealValue(prediction, review.getRating());
         }
 
         return error / reviews.size();
@@ -26,17 +26,17 @@ public class ReviewTester {
 
     private static double calculateRating(Document review) {
 
-        ArrayList<String> sentences = review.splitIntoSentences( review.getText() );
-        double positive = 0;
-        double negative = 0;
-        double rating = -1;
+        ArrayList<String> sentences = review.splitIntoSentences(review.getText());
+        double positive = 1;
+        double negative = 1;
+        double rating = 0;
         double wordCount = 0;
 
-        for ( String sentence : sentences ) {
-            ArrayList<String> words = review.splitIntoWords( review.getText() );
+        for (String sentence : sentences) {
+            ArrayList<String> words = review.splitIntoWords(review.getText());
             wordCount += words.size();
 
-            for ( String word : words ) {
+            for (String word : words) {
                 if (positiveWords.contains(word)) {
                     positive++;
                 } else if (negativeWords.contains(word)) {
@@ -45,37 +45,50 @@ public class ReviewTester {
             }
         }
 
-        double ratio = 0;
+        double ratio = positive / negative;
 
-        if (positive == 0) {
-            rating = 0;
-        } else if (negative == 0) {
-            rating = 3;
-        } else {
-            ratio = (positive) / (negative); // to prevent the div by 0 error
-        }
+//        if (positive == 0) {
+//            rating = 0;
+//        } else if (negative == 0) {
+//            rating = 3;
+//        } else {
+//            ratio = (positive) / (negative); // to prevent the div by 0 error
+//        }
 
             /*
             I hate this product and it sucks.
             1/7 / 2/7 = 0
              */
+//
+//        if (ratio <= 0.2) {
+//            rating = 1;
+//        } else if (ratio > 0.2 && ratio <= 0.4) {
+//            rating = 2;
+//        }else if (ratio > 0.4 && ratio < 0.6) {
+//            rating = 3;
+//        } else if (ratio >= 0.6 && ratio < 0.8) {
+//            rating = 4;
+//        } else if (ratio >= 0.8) {
+//            rating = 5;
+//        }
 
-        if (ratio <= 0.2) {
+
+        if (ratio < 0.5) {
             rating = 1;
-        } else if (ratio > 0.2 && ratio <= 0.4) {
+        } else if (ratio >= 0.5 && ratio < 0.8) {
             rating = 2;
-        }else if (ratio > 0.4 && ratio < 0.6) {
+        } else if (ratio >= 0.8 && ratio < 1.2) {
             rating = 3;
-        } else if (ratio >= 0.6 && ratio < 0.8) {
+        } else if (ratio >= 1.2 && ratio <= 2) {
             rating = 4;
-        } else if (ratio >= 0.8) {
+        } else {
             rating = 5;
         }
 
-        return (double)total / sentences.size();    // average the rating of all sentences to give final rating
+        return rating;   // average the rating of all sentences to give final rating
     }
 
-    private static double compareToRealValue( double prediction, double rating ) {
+    private static double compareToRealValue(double prediction, double rating) {
         return Math.abs(prediction - rating);
     }
 }
