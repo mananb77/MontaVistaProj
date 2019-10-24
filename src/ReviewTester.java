@@ -9,7 +9,7 @@ public class ReviewTester {
 
 //        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
         double averageError = compareToRealValues(reviews);
-        System.out.println("Average deviation: " + averageError);
+        System.out.println("Average Error: " + averageError);
     }
 
     private static double compareToRealValues(ArrayList<Document> reviews) {
@@ -75,11 +75,11 @@ public class ReviewTester {
 
         if (ratio < 0.5) {
             rating = 1;
-        } else if (ratio >= 0.5 && ratio < 0.8) {
+        } else if (ratio >= 0.5 && ratio < 0.7) {
             rating = 2;
-        } else if (ratio >= 0.8 && ratio < 1.2) {
+        } else if (ratio >= 0.7 && ratio < 1.3) {
             rating = 3;
-        } else if (ratio >= 1.2 && ratio <= 2) {
+        } else if (ratio >= 1.3 && ratio <= 2) {
             rating = 4;
         } else {
             rating = 5;
