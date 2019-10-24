@@ -5,9 +5,9 @@ public class ReviewTester {
     public static ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
 
     public static void main(String[] args) {
-//        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/reviews.csv");
+        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
 
-        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
+//        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
         double averageError = compareToRealValues( reviews );
         System.out.println("Average deviation: " + averageError);
     }
@@ -17,6 +17,7 @@ public class ReviewTester {
 
         for ( Document review : reviews ) {
             double prediction = calculateRating( review );
+            System.out.println(prediction + " " + review.getRating());
             error += compareToRealValue( prediction, review.getRating() );
         }
 
@@ -26,14 +27,14 @@ public class ReviewTester {
     private static double calculateRating(Document review) {
 
         ArrayList<String> sentences = review.splitIntoSentences( review.getText() );
-        int total = 0;
+        double positive = 0;
+        double negative = 0;
+        double rating = -1;
+        double wordCount = 0;
 
         for ( String sentence : sentences ) {
             ArrayList<String> words = review.splitIntoWords( review.getText() );
-
-            double positive = 0;
-            double negative = 0;
-            double rating = 0;
+            wordCount += words.size();
 
             for ( String word : words ) {
                 if (positiveWords.contains(word)) {
@@ -42,35 +43,33 @@ public class ReviewTester {
                     negative++;
                 }
             }
+        }
 
-            double ratio = 0;
+        double ratio = 0;
 
-            if (positive == 0) {
-                rating = 0;
-            } else if (negative == 0) {
-                rating = 3;
-            } else {
-                ratio = (positive/words.size()) / (negative/words.size()); // to prevent the div by 0 error
-            }
+        if (positive == 0) {
+            rating = 0;
+        } else if (negative == 0) {
+            rating = 3;
+        } else {
+            ratio = (positive) / (negative); // to prevent the div by 0 error
+        }
 
             /*
             I hate this product and it sucks.
             1/7 / 2/7 = 0
              */
 
-            if (ratio <= 0.2) {
-                rating = 1;
-            } else if (ratio > 0.2 && ratio <= 0.4) {
-                rating = 2;
-            }else if (ratio > 0.4 && ratio < 0.6) {
-                rating = 3;
-            } else if (ratio >= 0.6 && ratio < 0.8) {
-                rating = 4;
-            } else if (ratio >= 0.8) {
-                rating = 5;
-            }
-
-            total += rating;
+        if (ratio <= 0.2) {
+            rating = 1;
+        } else if (ratio > 0.2 && ratio <= 0.4) {
+            rating = 2;
+        }else if (ratio > 0.4 && ratio < 0.6) {
+            rating = 3;
+        } else if (ratio >= 0.6 && ratio < 0.8) {
+            rating = 4;
+        } else if (ratio >= 0.8) {
+            rating = 5;
         }
 
         return (double)total / sentences.size();    // average the rating of all sentences to give final rating

@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class TextLib {
 
-    public static final int AMAZON_REVIEW_START = 854;
-    public static final int AMAZON_REVIEW_END = 1395;
+    private static final int RATING = 0;
+    private static final int REVIEW = 1;
 
     public static String readFileAsString(String filename) {
         Scanner scanner;
@@ -61,19 +61,13 @@ public class TextLib {
 
         try {
             scanner = new Scanner(new FileReader(filename));
+            scanner.nextLine();
 
-            int count = 0;
-            for (int i = 0; i < AMAZON_REVIEW_START - 1; i++) {
-                scanner.nextLine();
-                count++;
-            }
-
-            while (scanner.hasNextLine() && count <= AMAZON_REVIEW_END) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
                 Document d = getReview(line);
                 reviews.add(d);
-                count++;
             }
 
             scanner.close();
@@ -115,11 +109,8 @@ public class TextLib {
     private static Document getReview(String line) {
         String[] data = line.split(",");
 
-//        String review = data[19].trim();
-//        int rating = Integer.parseInt(data[17].trim());
-
-        int rating = Integer.parseInt(data[0].trim());
-        String review = data[1].trim();
+        int rating = Integer.parseInt(data[RATING].trim());
+        String review = data[REVIEW].trim();
 
         return new Document(review, rating);
     }
