@@ -66,7 +66,7 @@ public class TextLib {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
-                Document d = getReview(line);
+                Document d = getAmazonReview(line);
                 reviews.add(d);
             }
 
@@ -92,7 +92,7 @@ public class TextLib {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
 
-                Document d = getReview(line);
+                Document d = getAmazonReview(line);
                 reviews.add(d);
                 count++;
             }
@@ -106,10 +106,52 @@ public class TextLib {
         return reviews;
     }
 
-    private static Document getReview(String line) {
+    private static Document getAmazonReview(String line) {
         String[] data = line.split(",");
 
         int rating = Integer.parseInt(data[RATING].trim());
+        String review = data[REVIEW].trim();
+
+        return new Document(review, rating);
+    }
+
+    public static ArrayList<Document> readAirlineReviewFile(String filename) {
+        Scanner scanner = null;
+        ArrayList<Document> reviews = new ArrayList<>();
+
+        try {
+            scanner = new Scanner(new FileReader(filename));
+            scanner.nextLine();
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+
+                Document d = getAirlineReview(line);
+                reviews.add(d);
+            }
+
+            scanner.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found " + filename);
+        }
+
+        return reviews;
+    }
+
+    private static Document getAirlineReview(String line) {
+        String[] data = line.split(",");
+
+        String ratingWord = data[RATING].trim();
+        int rating = 0;
+        if (ratingWord.equals("negative")) {
+            rating = 1;
+        } else if (ratingWord.equals("neutral")) {
+            rating = 3;
+        } else if (ratingWord.equals("positive")) {
+            rating = 5;
+        }
+
         String review = data[REVIEW].trim();
 
         return new Document(review, rating);
