@@ -36,42 +36,21 @@ public class ReviewTester {
             ArrayList<String> words = review.splitIntoWords(review.getText());
             wordCount += words.size();
 
-            for (String word : words) {
-                if (positiveWords.contains(word)) {
+            for (int i = 0; i < words.size(); i++) {
+
+                if (positiveWords.contains(words.get(i))) {
                     positive++;
-                } else if (negativeWords.contains(word)) {
+//                } else if(strongPositiveWords.contains(word)){
+//                    positive += 2;
+                } else if (negativeWords.contains(words.get(i))) {
                     negative++;
+//                }else if (strongNegativeWords.contains(word)){
+//                    negative += 2;
                 }
             }
         }
 
         double ratio = positive / negative;
-
-//        if (positive == 0) {
-//            rating = 0;
-//        } else if (negative == 0) {
-//            rating = 3;
-//        } else {
-//            ratio = (positive) / (negative); // to prevent the div by 0 error
-//        }
-
-            /*
-            I hate this product and it sucks.
-            1/7 / 2/7 = 0
-             */
-//
-//        if (ratio <= 0.2) {
-//            rating = 1;
-//        } else if (ratio > 0.2 && ratio <= 0.4) {
-//            rating = 2;
-//        }else if (ratio > 0.4 && ratio < 0.6) {
-//            rating = 3;
-//        } else if (ratio >= 0.6 && ratio < 0.8) {
-//            rating = 4;
-//        } else if (ratio >= 0.8) {
-//            rating = 5;
-//        }
-
 
         if (ratio < 0.5) {
             rating = 1;
@@ -79,7 +58,7 @@ public class ReviewTester {
             rating = 2;
         } else if (ratio >= 0.7 && ratio < 1.3) {
             rating = 3;
-        } else if (ratio >= 1.3 && ratio <= 2) {
+        } else if (ratio >= 1.3 && ratio <= 1.7) {
             rating = 4;
         } else {
             rating = 5;
