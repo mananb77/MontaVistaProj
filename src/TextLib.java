@@ -144,6 +144,7 @@ public class TextLib {
 
         String ratingWord = data[RATING].trim();
         int rating = 0;
+
         if (ratingWord.equals("negative")) {
             rating = 1;
         } else if (ratingWord.equals("neutral")) {
@@ -152,6 +153,7 @@ public class TextLib {
             rating = 5;
         }
 
+        System.out.println(line);
         String review = data[REVIEW].trim();
 
         return new Document(review, rating);

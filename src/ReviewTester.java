@@ -5,9 +5,9 @@ public class ReviewTester {
     public static ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
 
     public static void main(String[] args) {
-        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
-
-//        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
+        // ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
+        // ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
+        ArrayList<Document> reviews = TextLib.readAirlineReviewFile("data/airline_reviews.csv");
         double averageError = compareToRealValues(reviews);
         System.out.println("Average Error: " + averageError);
     }
@@ -70,4 +70,5 @@ public class ReviewTester {
     private static double compareToRealValue(double prediction, double rating) {
         return Math.abs(prediction - rating);
     }
+
 }
