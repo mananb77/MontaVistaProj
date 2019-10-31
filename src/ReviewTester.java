@@ -26,17 +26,18 @@ public class ReviewTester {
             double prediction = calculateRating(review);
             System.out.println(prediction + " " + review.getRating());
             System.out.println();
-            error += compareToRealValue(prediction, review.getRating());
+            error += compareAirlineValue(prediction, review.getRating());
 
-            if(prediction == review.getRating()){
+            if (prediction == review.getRating()){
                 correct++;
-            }else{
+            } else{
                 incorrect++;
             }
-            System.out.println(correct + " " + incorrect);
-            System.out.println( 100* (correct/(correct+incorrect)));
         }
 
+        System.out.println("correct: " + correct);
+        System.out.println("incorrect: " + incorrect);
+        System.out.println( 100* (correct/(correct+incorrect)) + "%");
 
         return error / reviews.size();
     }
@@ -86,5 +87,23 @@ public class ReviewTester {
 
     private static double compareToRealValue(double prediction, double rating) {
         return Math.abs(prediction - rating);
+    }
+
+    private static double compareAirlineValue ( double prediction, double rating ) {
+        int rating1 = 0;
+        int rating2 = 0;
+        if ( rating == 5 ) {
+            rating1 = 4;
+            rating2 = 5;
+            return Math.min( Math.abs(rating1 - prediction), Math.abs(rating2 - prediction));
+        } else if ( rating == 3 ) {
+            return Math.abs( rating - prediction );
+        } else if ( rating == 1) {
+            rating1 = 1;
+            rating2 = 2;
+            return Math.min( Math.abs(rating1 - prediction), Math.abs(rating2 - prediction));
+        }
+
+        return 0;
     }
 }
