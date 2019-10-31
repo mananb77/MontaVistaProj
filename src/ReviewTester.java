@@ -5,15 +5,15 @@ public class ReviewTester {
     public static ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
 
     public static void main(String[] args) {
-        ArrayList<Document> amazonReviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
+//        ArrayList<Document> amazonReviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
+//
+////        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
+//        double averageError = compareToRealValues(amazonReviews);
+//        System.out.println("Average Error: " + averageError);
 
-//        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
-        double averageError = compareToRealValues(amazonReviews);
-        System.out.println("Average Error: " + averageError);
-
-//        ArrayList<Document> airlineReviews = TextLib.readAirlineReviewFile("data/airline_reviews.csv");
-//        double averageAirlineError = compareToRealValues(airlineReviews);
-//        System.out.println("Average Error: " + averageAirlineError);
+        ArrayList<Document> airlineReviews = TextLib.readAirlineReviewFile("data/updated_airline_reviews.csv");
+        double averageAirlineError = compareToRealValues(airlineReviews);
+        System.out.println("Average Error: " + averageAirlineError);
 
     }
 
@@ -25,6 +25,7 @@ public class ReviewTester {
         for (Document review : reviews) {
             double prediction = calculateRating(review);
             System.out.println(prediction + " " + review.getRating());
+            System.out.println();
             error += compareToRealValue(prediction, review.getRating());
 
             if(prediction == review.getRating()){
@@ -66,6 +67,7 @@ public class ReviewTester {
         }
 
         double ratio = positive / negative;
+        System.out.println("ratio " + ratio);
 
         if (ratio < 0.4) {
             rating = 1;
@@ -73,7 +75,7 @@ public class ReviewTester {
             rating = 2;
         } else if (ratio >= 0.8 && ratio < 1.2) {
             rating = 3;
-        } else if (ratio >= 1.2 && ratio <= 1.5) {
+        } else if (ratio >= 1.2 && ratio <= 1.6) {
             rating = 4;
         } else {
             rating = 5;
