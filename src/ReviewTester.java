@@ -19,12 +19,23 @@ public class ReviewTester {
 
     private static double compareToRealValues(ArrayList<Document> reviews) {
         double error = 0;
+        double correct = 0;
+        double incorrect = 0;
 
         for (Document review : reviews) {
             double prediction = calculateRating(review);
             System.out.println(prediction + " " + review.getRating());
             error += compareToRealValue(prediction, review.getRating());
+
+            if(prediction == review.getRating()){
+                correct++;
+            }else{
+                incorrect++;
+            }
+            System.out.println(correct + " " + incorrect);
+            System.out.println( 100* (correct/(correct+incorrect)));
         }
+
 
         return error / reviews.size();
     }

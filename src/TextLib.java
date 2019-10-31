@@ -150,7 +150,33 @@ public class TextLib {
         } else if (ratingWord.equals("neutral")) {
             rating = 3;
         } else if (ratingWord.equals("positive")) {
-            rating = 5;
+            rating = 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            ;
         }
 
         System.out.println(line);
