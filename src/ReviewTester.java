@@ -25,7 +25,6 @@ public class ReviewTester {
     }
 
     private static double calculateRating(Document review) {
-
         ArrayList<String> sentences = review.splitIntoSentences(review.getText());
         double positive = 1;
         double negative = 1;
