@@ -5,11 +5,16 @@ public class ReviewTester {
     public static ArrayList<String> negativeWords = TextLib.saveWordsIntoList("data/negativewords.csv");
 
     public static void main(String[] args) {
-        ArrayList<Document> reviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
+        ArrayList<Document> amazonReviews = TextLib.readAmazonReviewFile("data/updated_reviews.csv");
 
 //        ArrayList<Document> reviews = TextLib.readSampleReviewFile("data/sample_reviews.csv");
-        double averageError = compareToRealValues(reviews);
+        double averageError = compareToRealValues(amazonReviews);
         System.out.println("Average Error: " + averageError);
+
+//        ArrayList<Document> airlineReviews = TextLib.readAirlineReviewFile("data/airline_reviews.csv");
+//        double averageAirlineError = compareToRealValues(airlineReviews);
+//        System.out.println("Average Error: " + averageAirlineError);
+
     }
 
     private static double compareToRealValues(ArrayList<Document> reviews) {
@@ -51,13 +56,13 @@ public class ReviewTester {
 
         double ratio = positive / negative;
 
-        if (ratio < 0.5) {
+        if (ratio < 0.4) {
             rating = 1;
-        } else if (ratio >= 0.5 && ratio < 0.7) {
+        } else if (ratio >= 0.4 && ratio < 0.8) {
             rating = 2;
-        } else if (ratio >= 0.7 && ratio < 1.3) {
+        } else if (ratio >= 0.8 && ratio < 1.2) {
             rating = 3;
-        } else if (ratio >= 1.3 && ratio <= 1.7) {
+        } else if (ratio >= 1.2 && ratio <= 1.5) {
             rating = 4;
         } else {
             rating = 5;
